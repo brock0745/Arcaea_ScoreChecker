@@ -43,13 +43,25 @@
   .title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
   h1{font-size:20px;font-weight:700;letter-spacing:-.01em;margin:0;}
   .sub{font-size:12px;color:var(--ink2);font-weight:500;}
-  .collapse-toggle{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink2);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex-shrink:0;transition:transform .25s var(--ease),background .2s;}
+  .collapse-toggle{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink2);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex-shrink:0;transition:transform .25s var(--ease),background .2s,border-color .2s;}
   .collapse-toggle svg{width:16px;height:16px;transition:transform .25s var(--ease);}
   .collapse-toggle:active{transform:scale(.9);}
-  header.manual-collapsed .collapse-toggle svg{transform:rotate(-90deg);}
-  header.manual-collapsed .collapsible{max-height:0!important;opacity:0;pointer-events:none;}
+  header.mode-collapsed .collapse-toggle svg{transform:rotate(-90deg);}
+  header.mode-expanded .collapse-toggle svg{transform:rotate(180deg);}
+  header.mode-expanded .collapse-toggle,header.mode-collapsed .collapse-toggle{background:var(--ink);border-color:var(--ink);color:#fff;}
+  header.mode-collapsed .collapsible{max-height:0!important;opacity:0;pointer-events:none;}
+  header.mode-collapsed .achv-wrap{max-height:0!important;opacity:0;pointer-events:none;margin:0;}
+  header.mode-expanded .collapsible{max-height:600px!important;opacity:1!important;pointer-events:auto!important;}
+  header.mode-expanded .achv-wrap{max-height:120px!important;opacity:1!important;margin:10px 0 7px!important;}
+  header.mode-expanded .head-inner{padding:12px 16px 10px!important;}
+  header.mode-expanded h1{font-size:20px!important;}
+  header.mode-expanded .sub{display:inline!important;}
+  header.mode-expanded .progress-top{margin:10px 0 7px!important;gap:12px!important;}
+  header.mode-expanded .metric b{font-size:23px!important;}
+  header.mode-expanded .metric span{font-size:12px!important;}
+  header.mode-expanded .progress-den{font-size:13px!important;}
+  header.mode-expanded .bar{height:8px!important;}
   .achv-wrap{transition:max-height .25s ease,opacity .2s ease,margin .25s ease;overflow:hidden;max-height:120px;opacity:1;}
-  header.manual-collapsed .achv-wrap{max-height:0!important;opacity:0;pointer-events:none;margin:0;}
 
   .save-dot{margin-left:auto;font-size:11px;color:var(--ink2);display:flex;align-items:center;gap:6px;}
   .save-dot i{width:7px;height:7px;border-radius:50%;background:#34c759;display:inline-block;transition:background .2s;}
@@ -358,7 +370,7 @@ function idbPut(k,v){return new Promise(async(res,rej)=>{try{const db=await open
 function idbDel(k){return new Promise(async(res,rej)=>{try{const db=await openDB();const t=db.transaction(STORE,"readwrite");t.objectStore(STORE).delete(k);t.oncomplete=()=>res();t.onerror=()=>rej(t.error);}catch(e){rej(e);}});}
 
 const Store={
-  ok:false,status:{},imgs:{},scores:{},manual:{},custom:[],cardSize:150,collapsed:{},headerCollapsed:false,
+  ok:false,status:{},imgs:{},scores:{},manual:{},custom:[],cardSize:150,collapsed:{},headerMode:'auto',
   async init(){
     if("indexedDB" in window){
       try{
@@ -370,7 +382,7 @@ const Store={
         const st=all["settings"]?JSON.parse(all["settings"]):{};
         if(st.cardSize)this.cardSize=st.cardSize;
         if(st.collapsed)this.collapsed=st.collapsed;
-        if(st.headerCollapsed)this.headerCollapsed=st.headerCollapsed;
+        if(st.headerMode)this.headerMode=st.headerMode;
         for(const k in all){if(k.indexOf("img:")===0)this.imgs[k.slice(4)]=all[k];}
         this.ok=true;
       }catch(e){this.ok=false;}
@@ -380,7 +392,7 @@ const Store={
   async saveScores(){if(this.ok)try{await idbPut("scores",JSON.stringify(this.scores));}catch(e){}},
   async saveManual(){if(this.ok)try{await idbPut("manual",JSON.stringify(this.manual));}catch(e){}},
   async saveCustom(){if(this.ok)try{await idbPut("custom",JSON.stringify(this.custom));}catch(e){}},
-  async saveSettings(){if(this.ok)try{await idbPut("settings",JSON.stringify({cardSize:this.cardSize,collapsed:this.collapsed,headerCollapsed:this.headerCollapsed}));}catch(e){}},
+  async saveSettings(){if(this.ok)try{await idbPut("settings",JSON.stringify({cardSize:this.cardSize,collapsed:this.collapsed,headerMode:this.headerMode}));}catch(e){}},
   async setImg(id,d){this.imgs[id]=d;if(this.ok)try{await idbPut("img:"+id,d);}catch(e){}},
   async delImg(id){delete this.imgs[id];if(this.ok)try{await idbDel("img:"+id);}catch(e){}}
 };
@@ -556,17 +568,24 @@ mainEl.addEventListener('touchend',()=>{if(pinch)pinch=null;});
 document.getElementById('zoomIn').addEventListener('click',()=>setZoom(Store.cardSize+18));
 document.getElementById('zoomOut').addEventListener('click',()=>setZoom(Store.cardSize-18));
 
-/* compact header on scroll */
+/* compact header on scroll (only in 'auto' mode) */
 const hdr=document.getElementById('hdr'),sentinel=document.getElementById('headerSentinel');
 if(window.IntersectionObserver){
-  new IntersectionObserver(([e])=>{hdr.classList.toggle('compact',!e.isIntersecting);},{threshold:0}).observe(sentinel);
+  new IntersectionObserver(([e])=>{
+    if(Store.headerMode==='auto')hdr.classList.toggle('compact',!e.isIntersecting);
+  },{threshold:0}).observe(sentinel);
 }
 
-/* manual header collapse toggle */
+/* manual header mode toggle: auto -> expanded (show everything) -> collapsed (hide everything) -> auto */
+function applyHeaderMode(){
+  hdr.classList.remove('mode-expanded','mode-collapsed','compact');
+  if(Store.headerMode==='expanded')hdr.classList.add('mode-expanded');
+  else if(Store.headerMode==='collapsed')hdr.classList.add('mode-collapsed');
+}
 const collapseToggle=document.getElementById('collapseToggle');
 collapseToggle.addEventListener('click',()=>{
-  const nowCollapsed=hdr.classList.toggle('manual-collapsed');
-  Store.headerCollapsed=nowCollapsed;
+  Store.headerMode = Store.headerMode==='auto' ? 'expanded' : Store.headerMode==='expanded' ? 'collapsed' : 'auto';
+  applyHeaderMode();
   Store.saveSettings();
 });
 
@@ -765,7 +784,7 @@ window.addEventListener('pagehide',()=>Store.saveStatus());
 
 (async()=>{
   await Store.init();
-  hdr.classList.toggle('manual-collapsed',!!Store.headerCollapsed);
+  applyHeaderMode();
   try{
     const res=await fetch('songs.json');
     SONGS=await res.json();
