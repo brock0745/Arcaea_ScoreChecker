@@ -48,6 +48,8 @@
   .collapse-toggle:active{transform:scale(.9);}
   header.manual-collapsed .collapse-toggle svg{transform:rotate(-90deg);}
   header.manual-collapsed .collapsible{max-height:0!important;opacity:0;pointer-events:none;}
+  .achv-wrap{transition:max-height .25s ease,opacity .2s ease,margin .25s ease;overflow:hidden;max-height:120px;opacity:1;}
+  header.manual-collapsed .achv-wrap{max-height:0!important;opacity:0;pointer-events:none;margin:0;}
 
   .save-dot{margin-left:auto;font-size:11px;color:var(--ink2);display:flex;align-items:center;gap:6px;}
   .save-dot i{width:7px;height:7px;border-radius:50%;background:#34c759;display:inline-block;transition:background .2s;}
@@ -237,6 +239,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
       </button>
     </div>
+    <div class="achv-wrap">
     <div class="progress-top">
       <span class="metric pm"><b id="pmNum">0</b><span>理論値</span></span>
       <span class="metric aa"><b id="aaNum">0</b><span>99.5%</span></span>
@@ -245,6 +248,7 @@
       <span class="progress-den" id="den">/ 0</span>
     </div>
     <div class="bar"><div class="seg-pm" id="segPm"></div><div class="seg-aa" id="segAa"></div><div class="seg-pure" id="segPure"></div><div class="seg-ex" id="segEx"></div></div>
+    </div>
     <div class="collapsible">
     <div class="legend">
       <span><i class="g"></i>理論値</span><span><i class="s"></i>99.5%</span><span><i class="p"></i>PM</span><span><i class="e"></i>EX+</span>
