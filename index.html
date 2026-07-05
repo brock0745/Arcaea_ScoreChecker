@@ -414,7 +414,7 @@ function sealContent(st){
 function cardInner(c){
   const st=Store.status[c.id];
   const userImg=Store.imgs[c.id];
-  const bg=userImg?userImg:(c.jacket?('jackets/'+c.jacket):null);
+  const bg=userImg?userImg:(c.jacket?('jacket/'+c.jacket):null);
   let h='<div class="art"'+(bg?(' style="background-image:url(\''+bg+'\')"'):'')+'></div><div class="scrim"></div>';
   h+='<span class="diff">'+c.diff+(c.cc!=null?(' '+c.cc.toFixed(1)):'')+'</span>';
   if(editImages){
@@ -471,7 +471,7 @@ function build(){
   const main=document.getElementById('main'),jump=document.getElementById('jump');
   main.innerHTML='';jump.innerHTML='';
   if(!SONGS.length){const w=document.createElement('div');w.className='warn';w.textContent='譜面データ（songs.json）を読み込めませんでした。index.htmlと同じ場所にsongs.jsonがあるか確認してください。';main.appendChild(w);}
-  if(!Store.ok){const w=document.createElement('div');w.className='warn';w.textContent='この表示環境ではローカル保存／同梱ジャケットが使えない場合があります。アプリ（APK）またはWeb公開（jackets同梱）で開くと全機能が有効になります。';main.appendChild(w);}
+  if(!Store.ok){const w=document.createElement('div');w.className='warn';w.textContent='この表示環境ではローカル保存／同梱ジャケットが使えない場合があります。アプリ（APK）またはWeb公開（jacket同梱）で開くと全機能が有効になります。';main.appendChild(w);}
   let shown=0;
   for(const g of groups()){
     const list=g.items.filter(visible);if(!list.length)continue;shown++;
