@@ -7,7 +7,7 @@
 <link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<title>Arcaea スコアチェッカー</title>
+<title>Arcaea 理論値チェッカー</title>
 <style>
   :root{
     --bg:#f5f5f7;--card:#fff;--ink:#1d1d1f;--ink2:#6e6e73;--line:#e3e3e6;
@@ -219,13 +219,12 @@
 </head>
 <body>
 <section id="notice" class="notice-page">
-  <h1>Arcaea スコアチェッカー</h1>
-  <p class="notice-sub">本サイトに関するお問い合わせは本人のXアカウントにお願いします。 @block0745</p>
+  <h1>Arcaea 理論値チェッカー</h1>
+  <p class="notice-sub">非公式 ・ 個人制作</p>
   <div class="notice-items">
     <div class="notice-item">
       <div class="ni-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>制作について</div>
-      制作と運営はあくまで制作者である brock 一個人であり、それぞれに関して理論値難易度表製作所などは関与しておりません。<br>
-      理論値難易度製作所のXアカウント：@MaxPM_Dif_Table
+      制作と運営はあくまで制作者である brock 一個人であり、それぞれに関して理論値難易度表製作所などは関与しておりません。
     </div>
     <div class="notice-item">
       <div class="ni-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>データについて</div>
@@ -350,16 +349,17 @@ function buildCharts(){
   charts=[];
   for(const s of SONGS){
     const ek=normTitle(s.title)+'|'+s.diff;
-    charts.push({tier:String(s.tier),title:s.title,disp:s.disp||s.title,diff:s.diff,id:s.tier+'|'+s.title+'|'+s.diff,engKey:ek,notes:(s.notes!=null?s.notes:null),cc:(s.cc!=null?s.cc:null),jacket:s.jacket||null,custom:false});
+    charts.push({tier:String(s.tier),title:s.title,disp:s.disp||s.title,en:(s.en||null),diff:s.diff,id:s.tier+'|'+s.title+'|'+s.diff,engKey:ek,notes:(s.notes!=null?s.notes:null),cc:(s.cc!=null?s.cc:null),jacket:s.jacket||null,custom:false});
   }
   for(const c of Store.custom){
     const ek=normTitle(c.title)+'|'+c.diff;
-    charts.push({tier:String(c.tier),title:c.title,disp:c.disp||c.title,diff:c.diff,id:'C|'+c.tier+'|'+c.title+'|'+c.diff,engKey:ek,notes:(c.notes!=null?c.notes:null),cc:(c.cc!=null?c.cc:null),jacket:c.jacket||null,custom:true});
+    charts.push({tier:String(c.tier),title:c.title,disp:c.disp||c.title,en:(c.en||null),diff:c.diff,id:'C|'+c.tier+'|'+c.title+'|'+c.diff,engKey:ek,notes:(c.notes!=null?c.notes:null),cc:(c.cc!=null?c.cc:null),jacket:c.jacket||null,custom:true});
   }
   LOOKUP={};
   for(const c of charts){
     LOOKUP[normTitle(c.title)+'|'+c.diff]=c;
     LOOKUP[normTitle(c.disp)+'|'+c.diff]=c;
+    if(c.en)LOOKUP[normTitle(c.en)+'|'+c.diff]=c;
   }
 }
 
@@ -684,10 +684,23 @@ function importScores(file){
     if(!sd){showToast('ScoreData シートが見つかりませんでした');return;}
     const rows=XLSX.utils.sheet_to_json(sd,{header:1,defval:null});
     const BR=/^(.*?)\s*\[(PST|PRS|FTR|BYD|ETR)\]$/;const map={};
-    for(const r of rows){const cell=r[0];let sc=Number(r[2]);if(!cell)continue;const mm=String(cell).trim().match(BR);if(!mm)continue;const d=mm[2];if(d!=='FTR'&&d!=='BYD'&&d!=='ETR')continue;if(!isFinite(sc))sc=0;const key=normTitle(mm[1])+'|'+d;if(!(key in map)||sc>map[key])map[key]=sc;}
+    let unmatched=0;
+    for(const r of rows){
+      const cell=r[0];let sc=Number(r[2]);if(!cell)continue;
+      const mm=String(cell).trim().match(BR);if(!mm)continue;
+      const d=mm[2];if(d!=='FTR'&&d!=='BYD'&&d!=='ETR')continue;
+      if(!isFinite(sc))sc=0;
+      const rawKey=normTitle(mm[1])+'|'+d;
+      const chart=LOOKUP[rawKey];
+      const key=chart?chart.engKey:rawKey;
+      if(!chart)unmatched++;
+      if(!(key in map)||sc>map[key])map[key]=sc;
+    }
     let added=0;for(const k in map){Store.scores[k]=map[k];added++;}
     Store.saveScores();const marked=deriveFromScores('upgrade');queueSave();build();
-    showToast('取込完了：スコア'+added+'件 / 自動マーク'+marked+'件');
+    let msg='取込完了：スコア'+added+'件 / 自動マーク'+marked+'件';
+    if(unmatched)msg+=' / 未一致'+unmatched+'件';
+    showToast(msg);
   }catch(e){showToast('読み込みに失敗しました');}};
   fr.readAsArrayBuffer(file);
 }
