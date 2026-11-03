@@ -5,9 +5,6 @@
 
 **🔗 使ってみる**: https://brock0745.github.io/Arcaea_ScoreChecker/
 
-![screenshot placeholder](./screenshot.png)
-<!-- 実際のスクリーンショットに差し替えてください -->
-
 ## これは何？
 
 Arcaeaには700曲以上の譜面があり、「どの曲をまだ理論値取ってないか」「PMまでは取ったけどEX+はまだか」といった進捗を頭の中だけで追うのはかなり大変です。
