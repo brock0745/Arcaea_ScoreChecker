@@ -6799,5 +6799,158 @@
     "notes": 1172,
     "cc": 10.5,
     "jacket": "Trick_Master.png"
+  },
+  {
+    "title": "……已至。",
+    "disp": "……已至。",
+    "diff": "FTR",
+    "tier": 0,
+    "notes": 783,
+    "cc": 9.2,
+    "jacket": null
+  },
+  {
+    "title": "……已至。",
+    "disp": "……已至。",
+    "diff": "ETR",
+    "tier": 0,
+    "notes": 932,
+    "cc": 10.1,
+    "jacket": null
+  },
+  {
+    "title": "Speed of Light",
+    "disp": "Speed of Light",
+    "diff": "FTR",
+    "tier": 0,
+    "notes": 533,
+    "cc": 7.8,
+    "jacket": null
+  },
+  {
+    "title": "Speed of Light",
+    "disp": "Speed of Light",
+    "diff": "ETR",
+    "tier": 0,
+    "notes": 636,
+    "cc": 9.3,
+    "jacket": null
+  },
+  {
+    "title": "Miss You",
+    "disp": "Miss You",
+    "diff": "FTR",
+    "tier": 0,
+    "notes": 653,
+    "cc": 8.4,
+    "jacket": null
+  },
+  {
+    "title": "ALIVE",
+    "disp": "ALIVE",
+    "diff": "FTR",
+    "tier": 0,
+    "notes": 1124,
+    "cc": 10.2,
+    "jacket": null
+  },
+  {
+    "title": "Operation Spectrum Battle Theme",
+    "disp": "Operation Spectrum Battle Theme",
+    "diff": "FTR",
+    "tier": 0,
+    "notes": 941,
+    "cc": 9.6,
+    "jacket": null
+  },
+  {
+    "title": "Operation Spectrum Battle Theme",
+    "disp": "Operation Spectrum Battle Theme",
+    "diff": "ETR",
+    "tier": 0,
+    "notes": 1252,
+    "cc": 10.8,
+    "jacket": null
+  },
+  {
+    "title": "Fading Sky",
+    "disp": "Fading Sky",
+    "diff": "FTR",
+    "tier": 0,
+    "notes": 987,
+    "cc": null,
+    "jacket": null
+  },
+  {
+    "title": "Fading Sky",
+    "disp": "Fading Sky",
+    "diff": "ETR",
+    "tier": 0,
+    "notes": 1013,
+    "cc": 9.8,
+    "jacket": null
+  },
+  {
+    "title": "Radiant",
+    "disp": "Radiant",
+    "diff": "FTR",
+    "tier": 0,
+    "notes": 1091,
+    "cc": null,
+    "jacket": null
+  },
+  {
+    "title": "Radiant",
+    "disp": "Radiant",
+    "diff": "ETR",
+    "tier": 0,
+    "notes": 1325,
+    "cc": 10.0,
+    "jacket": null
+  },
+  {
+    "title": "Somniomancer [null set]",
+    "disp": "Somniomancer [null set]",
+    "diff": "FTR",
+    "tier": 0,
+    "notes": 984,
+    "cc": 9.9,
+    "jacket": null
+  },
+  {
+    "title": "Somniomancer [null set]",
+    "disp": "Somniomancer [null set]",
+    "diff": "ETR",
+    "tier": 0,
+    "notes": 1221,
+    "cc": 10.9,
+    "jacket": null
+  },
+  {
+    "title": "Somniomancer [null set]",
+    "disp": "Somniomancer [null set]",
+    "diff": "ETR",
+    "tier": 0,
+    "notes": 1221,
+    "cc": 10.9,
+    "jacket": null
+  },
+  {
+    "title": "Renegade",
+    "disp": "Renegade",
+    "diff": "FTR",
+    "tier": 0,
+    "notes": 611,
+    "cc": 7.8,
+    "jacket": null
+  },
+  {
+    "title": "Renegade",
+    "disp": "Renegade",
+    "diff": "ETR",
+    "tier": 0,
+    "notes": 846,
+    "cc": null,
+    "jacket": null
   }
 ]
