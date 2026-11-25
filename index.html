@@ -28,7 +28,7 @@
     --bg:#f5f5f7;--card:#fff;--ink:#1d1d1f;--ink2:#6e6e73;--line:#e3e3e6;
     --gold1:#f2d488;--gold2:#d8a93a;--silver1:#e9eaee;--silver2:#a7adb8;
     --pure1:#bbdefb;--pure2:#1976d2;--ex1:#ffe0b2;--ex2:#f57c00;
-    --ftr1:#8e5ad6;--ftr2:#5b3a9e;--byd1:#d24b3e;--byd2:#7d1f1a;--etr1:#00f2fe;--etr2:#4facfe;--ins1:#3a3a52;--ins2:#1f1e33;
+    --ftr1:#8e5ad6;--ftr2:#5b3a9e;--byd1:#d24b3e;--byd2:#7d1f1a;--etr1:#36a6a6;--etr2:#226a76;
     --radius:22px;--ease:cubic-bezier(.22,.61,.36,1);--card-min:150px;
     --grid-gap:11px;
   }
@@ -118,7 +118,6 @@
   .chip:active{transform:scale(.96);}
   .chip.on{background:var(--ink);color:#fff;border-color:var(--ink);}
   .chip.ftr.on{background:var(--ftr2);border-color:var(--ftr2);}
-  .chip.ins.on{background:var(--ins2);border-color:var(--ins2);}
   .chip.byd.on{background:var(--byd2);border-color:var(--byd2);}
   .chip.etr.on{background:var(--etr2);border-color:var(--etr2);}
   .chip.pm.on{background:var(--gold2);border-color:var(--gold2);}
@@ -170,7 +169,6 @@
   .jk:active{transform:scale(.98);}
   .jk .art{position:absolute;inset:0;background-size:cover;background-position:center;}
   .jk.ftr .art{background-color:var(--ftr2);background-image:linear-gradient(150deg,var(--ftr1),var(--ftr2));}
-  .jk.ins .art{background-color:var(--ins2);background-image:linear-gradient(150deg,var(--ins1),var(--ins2));}
   .jk.byd .art{background-color:var(--byd2);background-image:linear-gradient(150deg,var(--byd1),var(--byd2));}
   .jk.etr .art{background-color:var(--etr2);background-image:linear-gradient(150deg,var(--etr1),var(--etr2));}
   .jk .art::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 80% 10%,rgba(255,255,255,.22),transparent 55%);}
@@ -240,23 +238,27 @@
   <p class="notice-sub">お問い合わせ、要望はbrockにお願いします。Xアカウント<a href="https://x.com/block0745" target="_blank" rel="noopener noreferrer">@block0745</a></p>
   <div class="notice-items">
     <div class="notice-item">
-      <div class="ni-head">制作について</div>
+      <div class="ni-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>制作について</div>
       制作と運営はあくまで制作者である brock 一個人であり、それぞれに関して理論値難易度表製作所などは関与しておりません。<br>
       理論値難易度表製作所のXアカウント:<a href="https://x.com/MaxPM_Dif_Table" target="_blank" rel="noopener noreferrer">@MaxPM_Dif_Table</a>
     </div>
     <div class="notice-item">
-      <div class="ni-head">スコア入力について</div>
+      <div class="ni-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>スコア入力について</div>
       本ツールでのスコアの入力はArcaea Consultant Sheet様 <a href="https://x.com/arcaea_consult" target="_blank" rel="noopener noreferrer">@arcaea_consult</a>のxlsxファイルをそのまま入力として使用できます。<br>
       入力はページ下部の「スコアシートから取込（.xlsx）」からダウンロードしたファイル全体を入力してください。
     </div>
     <div class="notice-item">
-      <div class="ni-head">データについて</div>
+      <div class="ni-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>データについて</div>
       データは必ずしも正確であるとは限りません。アップデート直後は曲の情報(特に譜面定数)が不明な可能性があります。
     </div>
     <div class="notice-item">
-      <div class="ni-head">免責事項</div>
+      <div class="ni-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>免責事項</div>
       このサイトは非公式のものであり、株式会社 lowiro 様及びその関連会社とは一切関係ありません。
     </div>
+  </div>
+  <div class="notice-scroll">
+    下にスクロールして開始
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
   </div>
 </section>
 
@@ -294,7 +296,6 @@
         <button class="chip ftr" data-diff="FTR">FTR</button>
         <button class="chip byd" data-diff="BYD">BYD</button>
         <button class="chip etr" data-diff="ETR">ETR</button>
-        <button class="chip ins" data-diff="INS">INS</button>
       </div>
       <div class="chips" id="stChips">
         <button class="chip pm" data-st="pm">理論値</button>
@@ -392,7 +393,7 @@ function idbPut(k,v){return new Promise(async(res,rej)=>{try{const db=await open
 function idbDel(k){return new Promise(async(res,rej)=>{try{const db=await openDB();const t=db.transaction(STORE,"readwrite");t.objectStore(STORE).delete(k);t.oncomplete=()=>res();t.onerror=()=>rej(t.error);}catch(e){rej(e);}});}
 
 const Store={
-  ok:false,status:{},imgs:{},scores:{},manual:{},custom:[],cardSize:150,collapsed:{},headerMode:'auto',copyrightMode:false,
+  ok:false,status:{},imgs:{},scores:{},manual:{},custom:[],cardSize:150,collapsed:{},headerMode:'expanded',copyrightMode:false,
   async init(){
     if("indexedDB" in window){
       try{
@@ -404,7 +405,7 @@ const Store={
         const st=all["settings"]?JSON.parse(all["settings"]):{};
         if(st.cardSize)this.cardSize=st.cardSize;
         if(st.collapsed)this.collapsed=st.collapsed;
-        if(st.headerMode)this.headerMode=st.headerMode;
+        if(st.headerMode==='expanded'||st.headerMode==='collapsed')this.headerMode=st.headerMode;
         if(st.copyrightMode)this.copyrightMode=st.copyrightMode;
         for(const k in all){if(k.indexOf("img:")===0)this.imgs[k.slice(4)]=all[k];}
         this.ok=true;
@@ -602,7 +603,7 @@ if(window.IntersectionObserver){
   },{threshold:0}).observe(sentinel);
 }
 
-/* manual header mode toggle: auto -> expanded (show everything) -> collapsed (hide everything) -> auto */
+/* header mode toggle: expanded (show everything) <-> collapsed (hide everything) */
 function applyHeaderMode(){
   hdr.classList.remove('mode-expanded','mode-collapsed','compact');
   if(Store.headerMode==='expanded')hdr.classList.add('mode-expanded');
@@ -610,7 +611,7 @@ function applyHeaderMode(){
 }
 const collapseToggle=document.getElementById('collapseToggle');
 collapseToggle.addEventListener('click',()=>{
-  Store.headerMode = Store.headerMode==='auto' ? 'expanded' : Store.headerMode==='expanded' ? 'collapsed' : 'auto';
+  Store.headerMode = Store.headerMode==='expanded' ? 'collapsed' : 'expanded';
   applyHeaderMode();
   Store.saveSettings();
 });
@@ -684,7 +685,7 @@ function openAddModal(){
   openModal('<h2>譜面を追加</h2><p class="muted" style="margin:-6px 0 12px">理論値難易度表の更新分を手動で追加できます。</p>'+
     '<div class="field"><label>タイトル（英題）</label><input id="cTitle" type="text" placeholder="曲名（ゲーム内表記）"></div>'+
     '<div class="field"><label>和題（任意）</label><input id="cDisp" type="text" placeholder="日本語表記が別にある場合"></div>'+
-    '<div class="row2"><div class="field"><label>難易度</label><select id="cDiff"><option>FTR</option><option>BYD</option><option>ETR</option><option>INS</option></select></div>'+
+    '<div class="row2"><div class="field"><label>難易度</label><select id="cDiff"><option>FTR</option><option>BYD</option><option>ETR</option></select></div>'+
     '<div class="field"><label>Tier（理論値難易度）</label><input id="cTier" type="number" inputmode="numeric" placeholder="例 25"></div></div>'+
     '<div class="row2"><div class="field"><label>ノーツ数</label><input id="cNotes" type="number" inputmode="numeric" placeholder="例 1234"></div>'+
     '<div class="field"><label>定数（任意）</label><input id="cCC" type="number" inputmode="decimal" step="0.1" placeholder="例 11.0"></div></div>'+
@@ -746,12 +747,12 @@ function importScores(file){
     const sd=wbk.Sheets['ScoreData'];
     if(!sd){showToast('ScoreData シートが見つかりませんでした');return;}
     const rows=XLSX.utils.sheet_to_json(sd,{header:1,defval:null});
-    const BR=/^(.*?)\s*\[(PST|PRS|FTR|BYD|ETR|INS)\]$/;const map={};
+    const BR=/^(.*?)\s*\[(PST|PRS|FTR|BYD|ETR)\]$/;const map={};
     let unmatched=0;
     for(const r of rows){
       const cell=r[0];let sc=Number(r[2]);if(!cell)continue;
       const mm=String(cell).trim().match(BR);if(!mm)continue;
-      const d=mm[2];if(d!=='FTR'&&d!=='BYD'&&d!=='ETR'&&d!=='INS')continue;
+      const d=mm[2];if(d!=='FTR'&&d!=='BYD'&&d!=='ETR')continue;
       if(!isFinite(sc))sc=0;
       const rawKey=normTitle(mm[1])+'|'+d;
       const chart=LOOKUP[rawKey];
